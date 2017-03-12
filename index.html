@@ -1,23 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='wordSearchApp'>
 
 <head>
-    <title></title>
+    <title>Sophie's Wordsearch</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/simplex/bootstrap.min.css" rel="stylesheet" integrity="sha384-C0X5qw1DlkeV0RDunhmi4cUBUkPDTvUqzElcNWm1NI2T4k8tKMZ+wRPQOhZfSJ9N"
+        crossorigin="anonymous">
     <link rel="stylesheet/less" type="text/css" href="css/site.less" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
     <script src="js/index.js"></script>
     <meta name="viewport" content="width=320" />
 </head>
 
-<body>
+<body ng-controller='GridController'>
 
-    <div class='container'>
-        <h1>Wordsearch</h1>
+    <div class='container-fluid'>
+        <div class='row'>
+            <div class='col-md-10'>
+                <h1>Wordsearch</h1>
+                <div id='grid' ng-class="{ 'show-words' : showWords }">
+                    <div class='grid-row' ng-repeat='row in gridRows'>
+                        <div class='grid-col' ng-repeat='col in row' ng-class="{ 'is-word': col.isWord }">
+                            {{ col.char }}
+                        </div>
+                    </div>
+                </div>
 
-        <div id='grid'>
-            The grid
+            </div>
+            <div class='col-md-2'>
+                <h2>Settings</h2>
+                <form class='form'>
+                    <div class='form-group'>
+                        <label for='gridSize'>Grid Size</label>
+                        <input type='text' id='gridSize' class='form-control' ng-model='size' />
+                    </div>
+                    <div class='form-group'>
+                        <label for='wordList'>Words</label>
+                        <textarea class='form-control' rows="8" id='wordList' ng-model='words'></textarea>
+                    </div>
+                    <div class='form-group'>
+                        <label><input type='checkbox' ng-model='showWords' />&nbsp;Highlight Words</label>
+                    </div>
+                    <div class='form-group'>
+                        <button class='btn btn-success btn-block' ng-click='buildGrid()'>Generate</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
     </div>
 
 </body>
